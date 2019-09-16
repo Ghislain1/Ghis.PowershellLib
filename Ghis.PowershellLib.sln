@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ghis.GuardLib", "Ghis.GuardLib\Ghis.GuardLib.csproj", "{85905A60-9DBE-48D2-9A29-7D917D248E12}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ghis.Powershell.Lib", "Ghis.Powershell.Lib\Ghis.Powershell.Lib.csproj", "{A46CD3B0-5F30-4246-96D9-745689571483}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ghis.PowershellLib.ConsoleDemo", "Ghis.PowershellLib.ConsoleDemo\Ghis.PowershellLib.ConsoleDemo.csproj", "{7560E6B6-6150-4A39-88A0-E12D7B3BBC52}"
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{85905A60-9DBE-48D2-9A29-7D917D248E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{85905A60-9DBE-48D2-9A29-7D917D248E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{85905A60-9DBE-48D2-9A29-7D917D248E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{85905A60-9DBE-48D2-9A29-7D917D248E12}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A46CD3B0-5F30-4246-96D9-745689571483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A46CD3B0-5F30-4246-96D9-745689571483}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A46CD3B0-5F30-4246-96D9-745689571483}.Release|Any CPU.ActiveCfg = Release|Any CPU
