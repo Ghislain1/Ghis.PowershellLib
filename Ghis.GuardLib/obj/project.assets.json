@@ -185,11 +185,11 @@
   "project": {
     "version": "1.0.1",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\PowershellSharpConsoleMastering\\Ghis.GuardLib\\Ghis.GuardLib.csproj",
+      "projectUniqueName": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.GuardLib\\Ghis.GuardLib.csproj",
       "projectName": "Ghis.GuardLib",
-      "projectPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\PowershellSharpConsoleMastering\\Ghis.GuardLib\\Ghis.GuardLib.csproj",
+      "projectPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.GuardLib\\Ghis.GuardLib.csproj",
       "packagesPath": "C:\\Users\\Zoe\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\PowershellSharpConsoleMastering\\Ghis.GuardLib\\obj\\",
+      "outputPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.GuardLib\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\PowershellSharpConsoleMastering\\Ghis.PowershellLib.ConsoleDemo\\Ghis.PowershellLib.ConsoleDemo.csproj": {}
+    "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.PowershellLib.ConsoleDemo\\Ghis.PowershellLib.ConsoleDemo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\PowershellSharpConsoleMastering\\Ghis.PowershellLib.ConsoleDemo\\Ghis.PowershellLib.ConsoleDemo.csproj": {
+    "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.PowershellLib.ConsoleDemo\\Ghis.PowershellLib.ConsoleDemo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\PowershellSharpConsoleMastering\\Ghis.PowershellLib.ConsoleDemo\\Ghis.PowershellLib.ConsoleDemo.csproj",
+        "projectUniqueName": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.PowershellLib.ConsoleDemo\\Ghis.PowershellLib.ConsoleDemo.csproj",
         "projectName": "Ghis.PowershellLib.ConsoleDemo",
-        "projectPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\PowershellSharpConsoleMastering\\Ghis.PowershellLib.ConsoleDemo\\Ghis.PowershellLib.ConsoleDemo.csproj",
+        "projectPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.PowershellLib.ConsoleDemo\\Ghis.PowershellLib.ConsoleDemo.csproj",
         "packagesPath": "C:\\Users\\Zoe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\PowershellSharpConsoleMastering\\Ghis.PowershellLib.ConsoleDemo\\obj\\",
+        "outputPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.PowershellLib.ConsoleDemo\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

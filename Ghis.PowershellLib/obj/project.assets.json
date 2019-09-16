@@ -241,11 +241,11 @@
   "project": {
     "version": "1.0.2",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\PowershellSharpConsoleMastering\\Ghis.PowershellLib\\Ghis.PowershellLib.csproj",
+      "projectUniqueName": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.PowershellLib\\Ghis.PowershellLib.csproj",
       "projectName": "Ghis.PowershellLib",
-      "projectPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\PowershellSharpConsoleMastering\\Ghis.PowershellLib\\Ghis.PowershellLib.csproj",
+      "projectPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.PowershellLib\\Ghis.PowershellLib.csproj",
       "packagesPath": "C:\\Users\\Zoe\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\PowershellSharpConsoleMastering\\Ghis.PowershellLib\\obj\\",
+      "outputPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.PowershellLib\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
