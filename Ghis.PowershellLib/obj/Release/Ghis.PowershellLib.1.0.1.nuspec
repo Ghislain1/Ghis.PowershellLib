@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Ghis.PowershellLib</id>
+    <version>1.0.1</version>
+    <authors>@Ghislain Z.</authors>
+    <owners>@Ghislain Z.</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="file">License.txt</license>
+    <licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>
+    <description>A Simple service to use Powershell API  to manage some files</description>
+    <copyright>@2019</copyright>
+    <tags>C# Library mvvm c# service</tags>
+    <repository type="git" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.PowerShell.SDK" version="6.1.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.PowershellLib\bin\Release\netstandard2.0\Ghis.PowershellLib.dll" target="lib\netstandard2.0\Ghis.PowershellLib.dll" />
+    <file src="C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.PowershellLib\License.txt" target="License.txt" />
+  </files>
+</package>
