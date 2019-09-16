@@ -8,7 +8,7 @@
     <Description>A Simple service to use Powershell API  to manage some files</Description>
     <Copyright>@2019</Copyright>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <PackageTags>C# Library mvvm c# service</PackageTags>

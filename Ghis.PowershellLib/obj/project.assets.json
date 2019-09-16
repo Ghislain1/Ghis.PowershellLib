@@ -239,11 +239,11 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.2",
+    "version": "1.0.3",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.PowershellLib\\Ghis.PowershellLib.csproj",
-      "projectName": "Ghis.PowershellLib",
-      "projectPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.PowershellLib\\Ghis.PowershellLib.csproj",
+      "projectUniqueName": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.PowershellLib\\Ghis.Powershell.Lib.csproj",
+      "projectName": "Ghis.Powershell.Lib",
+      "projectPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.PowershellLib\\Ghis.Powershell.Lib.csproj",
       "packagesPath": "C:\\Users\\Zoe\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Zoe\\Desktop\\___Z_Todelte\\Ghis.PowershellLib\\Ghis.PowershellLib\\obj\\",
       "projectStyle": "PackageReference",

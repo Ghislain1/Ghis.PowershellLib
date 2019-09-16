@@ -1,9 +1,0 @@
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.PowershellLib\bin\Debug\netstandard2.0\Ghis.PowershellLib.deps.json
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.PowershellLib\bin\Debug\netstandard2.0\Ghis.PowershellLib.dll
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.PowershellLib\obj\Debug\netstandard2.0\Ghis.PowershellLib.csproj.CoreCompileInputs.cache
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.PowershellLib\obj\Debug\netstandard2.0\Ghis.PowershellLib.AssemblyInfoInputs.cache
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.PowershellLib\obj\Debug\netstandard2.0\Ghis.PowershellLib.AssemblyInfo.cs
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.PowershellLib\bin\Debug\netstandard2.0\Ghis.PowershellLib.pdb
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.PowershellLib\obj\Debug\netstandard2.0\Ghis.PowershellLib.dll
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.PowershellLib\obj\Debug\netstandard2.0\Ghis.PowershellLib.pdb
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.PowershellLib\obj\Debug\netstandard2.0\Ghis.PowershellLib.csprojAssemblyReference.cache

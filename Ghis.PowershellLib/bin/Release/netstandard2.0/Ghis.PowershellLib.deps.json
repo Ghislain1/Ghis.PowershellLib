@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "Ghis.PowershellLib/1.0.2": {
+      "Ghis.PowershellLib/1.0.3": {
         "dependencies": {
           "Microsoft.PowerShell.SDK": "6.1.0",
           "NETStandard.Library": "2.0.3"
@@ -26,7 +26,7 @@
     }
   },
   "libraries": {
-    "Ghis.PowershellLib/1.0.2": {
+    "Ghis.PowershellLib/1.0.3": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
