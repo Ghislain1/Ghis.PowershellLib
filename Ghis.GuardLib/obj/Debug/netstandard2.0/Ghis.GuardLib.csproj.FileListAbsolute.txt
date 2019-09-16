@@ -1,9 +1,0 @@
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.GuardLib\bin\Debug\netstandard2.0\Ghis.GuardLib.deps.json
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.GuardLib\bin\Debug\netstandard2.0\Ghis.GuardLib.dll
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.GuardLib\bin\Debug\netstandard2.0\Ghis.GuardLib.pdb
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.GuardLib\obj\Debug\netstandard2.0\Ghis.GuardLib.csprojAssemblyReference.cache
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.GuardLib\obj\Debug\netstandard2.0\Ghis.GuardLib.csproj.CoreCompileInputs.cache
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.GuardLib\obj\Debug\netstandard2.0\Ghis.GuardLib.AssemblyInfoInputs.cache
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.GuardLib\obj\Debug\netstandard2.0\Ghis.GuardLib.AssemblyInfo.cs
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.GuardLib\obj\Debug\netstandard2.0\Ghis.GuardLib.dll
-C:\Users\Zoe\Desktop\___Z_Todelte\PowershellSharpConsoleMastering\Ghis.GuardLib\obj\Debug\netstandard2.0\Ghis.GuardLib.pdb
