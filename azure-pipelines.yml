@@ -3,31 +3,36 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
+# [1]: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops#use-a-microsoft-hosted-agent
+
 trigger:
-- master
+- master 
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'windows-latest' # All. Microsoft-hosted agent [1]
 
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+stages:
+  variables:
+    solution: '**/*.sln'
+    buildPlatform: 'Any CPU'
+    buildConfiguration: 'Release'
 
-steps:
-- task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
-
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+  jobs:
+  -job: GhislainFirstJob
+  displayName: Ghislain First Job
+  -job: GhislainJob
+  displayName: Ghislain Second Job
+     steps:
+     - task: NuGetToolInstaller@1
+     - task: NuGetCommand@2
+       inputs:
+        restoreSolution: '$(solution)'
+     - task: VSBuild@1
+          inputs:
+            solution: '$(solution)'
+            platform: '$(buildPlatform)'
+            configuration: '$(buildConfiguration)'
+     - task: VSTest@2
+              inputs:
+                platform: '$(buildPlatform)'
+                  configuration: '$(buildConfiguration)'
