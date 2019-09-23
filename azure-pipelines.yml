@@ -5,33 +5,37 @@
 
 # [1]: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops#use-a-microsoft-hosted-agent
 
+# .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+
 trigger:
-- master 
+  - master
 
 pool:
-  vmImage: 'windows-latest' # All. Microsoft-hosted agent [1]
+  vmImage: "windows-latest"
 
-stages:
-- stage: Ghislain Stage
-  displayName: Ghislain first Stage
-  variables:
-    solution: '**/*.sln'
-    buildPlatform: 'Any CPU'
-    buildConfiguration: 'Release'
-  jobs:
-    - job: GhislainJob
-      displayName: Ghislain Second Job
-      steps:
-      - task: NuGetToolInstaller@1
-      - task: NuGetCommand@2
-       inputs:
-       restoreSolution: '$(solution)'
-      - task: VSBuild@1
-       inputs:
-       solution: '$(solution)'
-       platform: '$(buildPlatform)'
-       configuration: '$(buildConfiguration)'
-      - task: VSTest@2
-       inputs:
-       platform: '$(buildPlatform)'
-       configuration: '$(buildConfiguration)'
+variables:
+  solution: "**/*.sln"
+  buildPlatform: "Any CPU"
+  buildConfiguration: "Release"
+
+steps:
+  - task: NuGetToolInstaller@1
+
+  - task: NuGetCommand@2
+    inputs:
+      restoreSolution: "$(solution)"
+
+  - task: DotNetCoreInstaller@0
+    inputs:
+      solution: "$(solution)"
+      platform: "$(buildPlatform)"
+      configuration: "$(buildConfiguration)"
+      version: 3.0.100-preview6-012264
+
+  - task: VSTest@2
+    inputs:
+      platform: "$(buildPlatform)"
+      configuration: "$(buildConfiguration)"
