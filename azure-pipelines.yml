@@ -12,14 +12,14 @@ pool:
   vmImage: 'windows-latest' # All. Microsoft-hosted agent [1]
 
 stages:
--stage: Ghislain Stage
+- stage: Ghislain Stage
  displayName: Ghislain first Stage
   variables:
     solution: '**/*.sln'
     buildPlatform: 'Any CPU'
     buildConfiguration: 'Release'
   jobs:
-    -job: GhislainJob
+    - job: GhislainJob
     displayName: Ghislain Second Job
      steps:
      - task: NuGetToolInstaller@1
