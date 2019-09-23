@@ -18,9 +18,7 @@ stages:
     buildConfiguration: 'Release'
 
   jobs:
-  -job: GhislainFirstJob
-  displayName: Ghislain First Job
-  -job: GhislainJob
+    -job: GhislainJob
   displayName: Ghislain Second Job
      steps:
      - task: NuGetToolInstaller@1
