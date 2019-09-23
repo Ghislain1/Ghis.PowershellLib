@@ -13,7 +13,7 @@ pool:
 
 stages:
 - stage: Ghislain Stage
- displayName: Ghislain first Stage
+  displayName: Ghislain first Stage
   variables:
     solution: '**/*.sln'
     buildPlatform: 'Any CPU'
