@@ -43,10 +43,3 @@ steps:
     inputs:
       platform: "$(buildPlatform)"
       configuration: "$(buildConfiguration)"
-
-  - task: NugetCommand@2
-    displayName: "Nuget packae PackCommandGhislain"
-    inputs:
-      command: "pack"
-      packagesToPack: "**/*.csproj"
-      packDestination: "$(Build.ArtifactStagingDirectory)"
