@@ -29,6 +29,7 @@ steps:
       command: build
       projects: "**/*.csproj"
       arguments: "--configuration Release"
+      verbosityRestore: "Detailed"
 
   - task: VSTest@2
     inputs:
