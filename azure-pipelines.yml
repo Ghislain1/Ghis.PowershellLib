@@ -30,11 +30,18 @@ steps:
   #     restoreSolution: "$(solution)"
 
   - task: DotNetCoreInstaller@0
+    displayName: DotnetCoreghISLAIN
     inputs:
       solution: "$(solution)"
       platform: "$(buildPlatform)"
       configuration: "$(buildConfiguration)"
       version: "3.0.100-preview6-012264"
+      
+  - task: DotNetCoreCLI@2 displayName: Build
+      inputs:
+    command: build
+    projects: '**/*.csproj'
+    arguments: '--configuration Release' # Update this to match your need
 
   - task: VSTest@2
     inputs:
