@@ -31,7 +31,8 @@ steps:
       arguments: "--configuration Release"
       verbosityRestore: "Detailed"
       packageType: sdk
-      version: "3.0.100-preview6-012264"
+      version: 3.0.x
+      includePreviewVersions: true
 
   - task: VSTest@2
     inputs:
