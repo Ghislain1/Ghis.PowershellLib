@@ -19,7 +19,8 @@ public class PowershellService : IPowershellService
         ArgumentException.ThrowIfNullOrWhiteSpace(scriptString);
         ArgumentNullException.ThrowIfNull(onDataReceived);
 
-        await foreach (var line in this.InvokeAsync(scriptString, cancelToken).ConfigureAwait(false))
+        var lines = await this.InvokeAsync(scriptString, cancelToken).ConfigureAwait(false);
+        foreach (var line in lines)
         {
             onDataReceived(line);
         }
@@ -28,39 +29,43 @@ public class PowershellService : IPowershellService
     private async Task<IEnumerable<string>> RunCommand(string scriptString, CancellationToken cancelToken)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(scriptString);
-
-        var results = new List<string>();
-        await foreach (var line in this.InvokeAsync(scriptString, cancelToken).ConfigureAwait(false))
-        {
-            results.Add(line);
-        }
-
-        return results;
+        return await this.InvokeAsync(scriptString, cancelToken).ConfigureAwait(false);
     }
 
-    private async IAsyncEnumerable<string> InvokeAsync(string scriptString, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancelToken)
+    private async Task<List<string>> InvokeAsync(string scriptString, CancellationToken cancelToken)
     {
         using var ps = PowerShell.Create();
         ps.AddScript(scriptString);
 
         var output = new PSDataCollection<PSObject>();
-        using var registration = cancelToken.Register(() => ps.Stop());
-
-        var invokeTask = ps.InvokeAsync<PSObject, PSObject>(null, output, null, null, null);
-
-        await foreach (var item in output.ReadAllAsync(cancelToken).ConfigureAwait(false))
+        using var registration = cancelToken.Register(() =>
         {
-            cancelToken.ThrowIfCancellationRequested();
-            var line = item?.BaseObject?.ToString() ?? item?.ToString();
-            if (line is not null)
+            try
             {
-                yield return line;
+                ps.Stop();
             }
+            catch (ObjectDisposedException)
+            {
+            }
+        });
+
+        Task<PSDataCollection<PSObject>> invokeTask;
+        try
+        {
+            invokeTask = ps.InvokeAsync<PSObject, PSObject>(null, output);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"Failed to start PowerShell command: {ex.Message}", ex);
         }
 
         try
         {
-            await invokeTask.ConfigureAwait(false);
+            await invokeTask.WaitAsync(cancelToken).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            throw new OperationCanceledException(cancelToken);
         }
         catch (PipelineStoppedException) when (cancelToken.IsCancellationRequested)
         {
@@ -73,6 +78,12 @@ public class PowershellService : IPowershellService
         {
             throw new InvalidOperationException(BuildErrorMessage(ps));
         }
+
+        return output
+            .Select(item => item?.BaseObject?.ToString() ?? item?.ToString())
+            .Where(line => line is not null)
+            .Cast<string>()
+            .ToList();
     }
 
     private static string BuildErrorMessage(PowerShell ps)
