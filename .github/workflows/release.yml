@@ -2,8 +2,7 @@ name: Release
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: [master, main]
   schedule:
     - cron: "0 6 * * 1"
   workflow_dispatch:
@@ -28,11 +27,18 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
+      - name: Restore tools
+        run: dotnet tool restore
+
+      - name: Determine version
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v4.2.0
+
       - name: Restore
         run: dotnet restore Ghis.PowershellLib.sln
 
       - name: Build
-        run: dotnet build Ghis.PowershellLib.sln -c Release --no-restore
+        run: dotnet build Ghis.PowershellLib.sln -c Release --no-restore /p:Version=${{ steps.gitversion.outputs.semVer }} /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.informationalVersion }}
 
       - name: Test
         run: dotnet test Ghis.PowershellLib.sln -c Release --no-build --verbosity normal
@@ -41,19 +47,26 @@ jobs:
         id: version
         shell: pwsh
         run: |
-          if ("${{ github.ref_type }}" -eq "tag") {
-            $tag = "${{ github.ref_name }}"
-            $version = $tag.TrimStart('v')
+          $date = Get-Date -Format 'yyyyMMdd'
+          if ("${{ github.event_name }}" -eq "schedule") {
+            $version = "0.0.0-weekly.$date.${{ github.run_number }}"
+            $tag = "weekly/$version"
+            $prerelease = "true"
+            $publish = "false"
           }
           else {
-            $version = "0.0.0-weekly.$(Get-Date -Format 'yyyyMMdd').${{ github.run_number }}"
-            $tag = "weekly/$version"
+            $version = "0.0.0-daily.$date.${{ github.run_number }}"
+            $tag = "daily/$version"
+            $prerelease = "true"
+            $publish = "false"
           }
           "version=$version" >> $env:GITHUB_OUTPUT
           "tag=$tag" >> $env:GITHUB_OUTPUT
+          "prerelease=$prerelease" >> $env:GITHUB_OUTPUT
+          "publish=$publish" >> $env:GITHUB_OUTPUT
 
       - name: Pack
-        run: dotnet pack Ghis.Powershell.Lib/Ghis.Powershell.Lib.csproj -c Release --no-build -o artifacts /p:PackageVersion=${{ steps.version.outputs.version }}
+        run: dotnet pack Ghis.Powershell.Lib/Ghis.Powershell.Lib.csproj -c Release --no-build -o artifacts /p:PackageVersion=${{ steps.version.outputs.version }} /p:Version=${{ steps.gitversion.outputs.semVer }}
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
@@ -62,7 +75,6 @@ jobs:
           path: artifacts/*.nupkg
 
       - name: Create GitHub release
-        if: ${{ github.ref_type != 'tag' }}
         env:
           GH_TOKEN: ${{ github.token }}
         shell: pwsh
@@ -71,19 +83,19 @@ jobs:
           gh release create $tag artifacts/*.nupkg --generate-notes --prerelease --title $tag
 
       - name: NuGet login (OIDC)
-        if: ${{ github.ref_type == 'tag' && secrets.NUGET_USER != '' }}
+        if: ${{ steps.version.outputs.publish == 'true' && secrets.NUGET_USER != '' }}
         id: nuget_login
         uses: NuGet/login@v1
         with:
           user: ${{ secrets.NUGET_USER }}
 
       - name: Publish to NuGet (Trusted Publishing)
-        if: ${{ github.ref_type == 'tag' && steps.nuget_login.outputs.NUGET_API_KEY != '' }}
+        if: ${{ steps.version.outputs.publish == 'true' && steps.nuget_login.outputs.NUGET_API_KEY != '' }}
         shell: pwsh
         run: dotnet nuget push "artifacts/*.nupkg" --api-key "${{ steps.nuget_login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
 
       - name: Publish to NuGet (API key fallback)
-        if: ${{ github.ref_type == 'tag' && steps.nuget_login.outputs.NUGET_API_KEY == '' && secrets.NUGET_API_KEY != '' }}
+        if: ${{ steps.version.outputs.publish == 'true' && steps.nuget_login.outputs.NUGET_API_KEY == '' && secrets.NUGET_API_KEY != '' }}
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         shell: pwsh

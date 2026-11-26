@@ -17,17 +17,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.x
 
+      - name: Restore tools
+        run: dotnet tool restore
+
+      - name: Determine version
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v4.2.0
+
       - name: Restore
         run: dotnet restore Ghis.PowershellLib.sln
 
       - name: Build
-        run: dotnet build Ghis.PowershellLib.sln -c Release --no-restore
+        run: dotnet build Ghis.PowershellLib.sln -c Release --no-restore /p:Version=${{ steps.gitversion.outputs.semVer }} /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.informationalVersion }}
 
       - name: Test
         run: dotnet test Ghis.PowershellLib.sln -c Release --no-build --verbosity normal

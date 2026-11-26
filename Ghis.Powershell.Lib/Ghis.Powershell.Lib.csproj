@@ -9,7 +9,6 @@
     <Authors>@Ghislain Z.</Authors>
     <Description>A Simple service to use Powershell API  to manage some files</Description>
     <Copyright>@2019</Copyright>
-    <Version>1.0.3</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <PackageTags>C# Library mvvm c# service</PackageTags>
