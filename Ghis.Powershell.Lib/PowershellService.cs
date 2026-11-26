@@ -1,28 +1,12 @@
 ﻿namespace Ghis.PowershellLib;
 
-using System;
-using System.Collections.Generic;
 using System.Management.Automation;
-using System.Threading;
-using System.Threading.Tasks;
 
 public class PowershellService : IPowershellService
 {
     public Task<IEnumerable<string>> RunCommand(CancellationToken cancelToken, string scriptString)
     {
-        var tcs = new TaskCompletionSource<IEnumerable<string>>();
-
-        Task.Factory.StartNew(() =>
-        {
-            using (var ps = PowerShell.Create())
-            {
-                var collection = ps.AddScript(scriptString).Invoke<string>();
-
-                tcs.TrySetResult(collection);
-            }
-        });
-
-        return tcs.Task;
+        return this.RunCommand(scriptString, cancelToken);
     }
 
     public Task RunCommand(string scriptString, Action<string> onDataReceived)
@@ -30,24 +14,75 @@ public class PowershellService : IPowershellService
         return this.RunCommand(scriptString, onDataReceived, CancellationToken.None);
     }
 
-    public Task RunCommand(string scriptString, Action<string> onDataReceived, CancellationToken cancelToken)
+    public async Task RunCommand(string scriptString, Action<string> onDataReceived, CancellationToken cancelToken)
     {
-        var tcs = new TaskCompletionSource<object?>();
+        ArgumentException.ThrowIfNullOrWhiteSpace(scriptString);
+        ArgumentNullException.ThrowIfNull(onDataReceived);
 
-        Task.Run(() =>
+        await foreach (var line in this.InvokeAsync(scriptString, cancelToken).ConfigureAwait(false))
         {
-            using (var ps = PowerShell.Create())
+            onDataReceived(line);
+        }
+    }
+
+    private async Task<IEnumerable<string>> RunCommand(string scriptString, CancellationToken cancelToken)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(scriptString);
+
+        var results = new List<string>();
+        await foreach (var line in this.InvokeAsync(scriptString, cancelToken).ConfigureAwait(false))
+        {
+            results.Add(line);
+        }
+
+        return results;
+    }
+
+    private async IAsyncEnumerable<string> InvokeAsync(string scriptString, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancelToken)
+    {
+        using var ps = PowerShell.Create();
+        ps.AddScript(scriptString);
+
+        var output = new PSDataCollection<PSObject>();
+        using var registration = cancelToken.Register(() => ps.Stop());
+
+        var invokeTask = ps.InvokeAsync<PSObject, PSObject>(null, output, null, null, null);
+
+        await foreach (var item in output.ReadAllAsync(cancelToken).ConfigureAwait(false))
+        {
+            cancelToken.ThrowIfCancellationRequested();
+            var line = item?.BaseObject?.ToString() ?? item?.ToString();
+            if (line is not null)
             {
-                var collection = ps.AddScript(scriptString).Invoke<string>();
-                foreach (var line in collection)
-                {
-                    onDataReceived(line);
-                }
-
-                tcs.TrySetResult(null);
+                yield return line;
             }
-        }, cancelToken);
+        }
 
-        return tcs.Task;
+        try
+        {
+            await invokeTask.ConfigureAwait(false);
+        }
+        catch (PipelineStoppedException) when (cancelToken.IsCancellationRequested)
+        {
+            throw new OperationCanceledException(cancelToken);
+        }
+
+        cancelToken.ThrowIfCancellationRequested();
+
+        if (ps.HadErrors)
+        {
+            throw new InvalidOperationException(BuildErrorMessage(ps));
+        }
+    }
+
+    private static string BuildErrorMessage(PowerShell ps)
+    {
+        var errors = ps.Streams.Error;
+        if (errors.Count == 0)
+        {
+            return "PowerShell command failed.";
+        }
+
+        return string.Join(Environment.NewLine, errors.Select(e => e.ToString()));
     }
 }
