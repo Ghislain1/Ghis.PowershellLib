@@ -126,7 +126,7 @@ The release workflow keeps `NUGET_API_KEY` as an optional fallback for unsupport
 ## CI/CD
 
 - GitHub Actions CI: `.github/workflows/ci.yml` restores, builds, and tests on pushes and pull requests.
-- GitHub Actions Release: `.github/workflows/release.yml` creates a prerelease GitHub release on each push to `master`/`main` and on a weekly schedule (Monday 06:00 UTC). It uses GitVersion for build versioning and creates dated package versions; NuGet publishing is gated by the workflow `publish` flag.
+- GitHub Actions Release: `.github/workflows/release.yml` creates a prerelease GitHub release on each push to `master`/`main` and on a weekly schedule (Monday 06:00 UTC). Pushing a `v*` tag creates/updates a GitHub release and publishes the package to NuGet via Trusted Publishing (`NUGET_USER`) with `NUGET_API_KEY` fallback.
 
 ## License
 

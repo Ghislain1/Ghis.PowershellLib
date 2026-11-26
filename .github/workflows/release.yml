@@ -3,6 +3,8 @@ name: Release
 on:
   push:
     branches: [master, main]
+    tags:
+      - "v*"
   schedule:
     - cron: "0 6 * * 1"
   workflow_dispatch:
@@ -50,7 +52,13 @@ jobs:
         shell: pwsh
         run: |
           $date = Get-Date -Format 'yyyyMMdd'
-          if ("${{ github.event_name }}" -eq "schedule") {
+          if ("${{ github.ref_type }}" -eq "tag") {
+            $tag = "${{ github.ref_name }}"
+            $version = $tag.TrimStart('v')
+            $prerelease = "false"
+            $publish = "true"
+          }
+          elseif ("${{ github.event_name }}" -eq "schedule") {
             $version = "0.0.0-weekly.$date.${{ github.run_number }}"
             $tag = "weekly/$version"
             $prerelease = "true"
@@ -77,12 +85,28 @@ jobs:
           path: artifacts/*.nupkg
 
       - name: Create GitHub release
+        if: ${{ github.ref_type != 'tag' }}
         env:
           GH_TOKEN: ${{ github.token }}
         shell: pwsh
         run: |
           $tag = "${{ steps.version.outputs.tag }}"
           gh release create $tag artifacts/*.nupkg --generate-notes --prerelease --title $tag
+
+      - name: Create GitHub release (tag)
+        if: ${{ github.ref_type == 'tag' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+        run: |
+          $tag = "${{ steps.version.outputs.tag }}"
+          gh release view $tag *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag artifacts/*.nupkg --generate-notes --title $tag
+          }
+          else {
+            gh release upload $tag artifacts/*.nupkg --clobber
+          }
 
       - name: NuGet login (OIDC)
         if: ${{ steps.version.outputs.publish == 'true' && secrets.NUGET_USER != '' }}
