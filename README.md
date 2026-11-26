@@ -71,6 +71,25 @@ dotnet build Ghis.PowershellLib.sln -c Release
 dotnet test Ghis.PowershellLib.sln -c Release
 ```
 
+## Getting Started with Coding Guidelines
+
+- **Setup**: Install the .NET 10 SDK, clone the repository, and restore dependencies with `dotnet restore Ghis.PowershellLib.sln`.
+- **Formatting**: Follow `.editorconfig` - CRLF line endings, 4 spaces for C#, 2 spaces for `.csproj` and JSON files.
+- **Project defaults**: Keep `ImplicitUsings` and `Nullable` enabled; projects target `net10.0`.
+- **Code style**: Match existing C# patterns, keep changes small, and preserve public API behavior unless intentionally changed and documented.
+- **Tests**: Add or update xUnit tests for behavior changes.
+- **Verification**: Before opening a PR, run:
+
+  ```bash
+  dotnet restore Ghis.PowershellLib.sln
+  dotnet build Ghis.PowershellLib.sln -c Release
+  dotnet test Ghis.PowershellLib.sln -c Release
+  ```
+
+- **Security and dependencies**: Never commit secrets or API keys; use compatible, secure NuGet versions and verify after updates.
+
+For more details, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Create a NuGet Package
 
 The library project is configured to generate a NuGet package on build (`GeneratePackageOnBuild=true`). To create a package explicitly:
