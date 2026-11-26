@@ -123,7 +123,7 @@ jobs:
           gh release create $tag artifacts/*.nupkg --generate-notes --prerelease --title $tag
 
       - name: Create GitHub release (tag)
-        if: ${{ github.ref_type == 'tag' }}
+        if: ${{ always() && github.ref_type == 'tag' }}
         env:
           GH_TOKEN: ${{ github.token }}
         shell: pwsh
