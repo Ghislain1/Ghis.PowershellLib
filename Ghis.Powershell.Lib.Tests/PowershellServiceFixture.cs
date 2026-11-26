@@ -1,5 +1,6 @@
 namespace Ghis.Powershell.Lib.Tests;
 
+using FluentAssertions;
 using Ghis.PowershellLib;
 using Xunit;
 
@@ -13,8 +14,8 @@ public class PowershellServiceFixture
         var result = await powershellService.RunCommand(CancellationToken.None, "Write-Output 'hello'");
 
         var output = result.ToList();
-        Assert.NotEmpty(output);
-        Assert.Contains("hello", output);
+        output.Should().NotBeEmpty();
+        output.Should().Contain("hello");
     }
 
     [Fact]
@@ -25,7 +26,7 @@ public class PowershellServiceFixture
 
         await powershellService.RunCommand("Write-Output 'hello'", output.Add);
 
-        Assert.Contains("hello", output);
+        output.Should().Contain("hello");
     }
 
     [Fact]
@@ -37,7 +38,7 @@ public class PowershellServiceFixture
 
         await powershellService.RunCommand("Write-Output 'hello'", output.Add, cts.Token);
 
-        Assert.Contains("hello", output);
+        output.Should().Contain("hello");
     }
 
     [Fact]
@@ -48,6 +49,6 @@ public class PowershellServiceFixture
         var result = await powershellService.RunCommand(CancellationToken.None, "Write-Output 'alpha'; Write-Output 'beta'");
 
         var output = result.ToList();
-        Assert.Equal(["alpha", "beta"], output);
+        output.Should().Equal("alpha", "beta");
     }
 }
