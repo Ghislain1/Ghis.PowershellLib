@@ -100,15 +100,9 @@ dotnet pack Ghis.Powershell.Lib/Ghis.Powershell.Lib.csproj -c Release -o artifac
 
 This creates a `.nupkg` file in the `artifacts` directory.
 
-To publish the package to NuGet.org manually (API key fallback for local/unsupported CI):
+For GitHub Actions, use [NuGet Trusted Publishing](https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing).
 
-```bash
-dotnet nuget push "artifacts/*.nupkg" --api-key <YOUR_NUGET_API_KEY> --source https://api.nuget.org/v3/index.json --skip-duplicate
-```
-
-For GitHub Actions, prefer [NuGet Trusted Publishing](https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing) instead of a long-lived API key.
-
-### Getting Started with NuGet Trusted Publishing (Recommended)
+### Getting Started with NuGet Trusted Publishing
 
 1. Sign in to [NuGet.org](https://www.nuget.org/).
 2. Open your username menu and choose **Trusted Publishing**.
@@ -119,14 +113,12 @@ For GitHub Actions, prefer [NuGet Trusted Publishing](https://learn.microsoft.co
    - **Workflow File**: `release.yml` (file name only)
    - **Environment**: `production` (must match the workflow job environment).
 4. In GitHub repository settings, add a secret named `NUGET_USER` with your NuGet.org profile name (not email).
-5. Push a `v*` tag or run the release workflow. The workflow uses `NuGet/login@v1` with OIDC to obtain a short-lived NuGet API key.
-
-The release workflow keeps `NUGET_API_KEY` as an optional fallback for unsupported/manual scenarios, but Trusted Publishing should be the default. Never commit API keys or secrets.
+5. Push a `v*` tag to publish. The release workflow uses `NuGet/login@v1` with OIDC to obtain a short-lived NuGet API key and publish the package.
 
 ## CI/CD
 
 - GitHub Actions CI: `.github/workflows/ci.yml` restores, builds, and tests on pushes and pull requests.
-- GitHub Actions Release: `.github/workflows/release.yml` creates a prerelease GitHub release on each push to `master`/`main` and on a weekly schedule (Monday 06:00 UTC). Pushing a `v*` tag creates/updates a GitHub release and publishes the package to NuGet via Trusted Publishing (`NUGET_USER`) with `NUGET_API_KEY` fallback.
+- GitHub Actions Release: `.github/workflows/release.yml` creates a prerelease GitHub release on each push to `master`/`main` and every 3 weeks on Monday at 06:00 UTC (scheduled runs). Pushing a `v*` tag creates/updates a GitHub release and publishes the package to NuGet via Trusted Publishing (`NUGET_USER`).
 
 ## License
 

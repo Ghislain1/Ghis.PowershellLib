@@ -81,7 +81,7 @@ The `Release` GitHub Actions workflow will:
 - Build and test the solution.
 - Pack `Ghis.Powershell.Lib` using the tag version.
 - Create or update the GitHub release for that tag.
-- Publish the package to NuGet.org via Trusted Publishing (`NUGET_USER`) or `NUGET_API_KEY` fallback.
+- Publish the package to NuGet.org via Trusted Publishing (`NUGET_USER`).
 
 ### Version bump hints
 

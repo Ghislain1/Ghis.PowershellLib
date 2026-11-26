@@ -14,12 +14,33 @@ permissions:
   id-token: write
 
 jobs:
+  check-schedule:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+    steps:
+      - name: Check schedule cadence
+        id: check
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          week=$(date -u +%V)
+          if [ $((10#$week % 3)) -eq 1 ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+          fi
+
   release:
+    needs: check-schedule
+    if: needs.check-schedule.outputs.should_run == 'true'
     runs-on: windows-latest
     environment: production
     env:
       NUGET_USER: ${{ secrets.NUGET_USER }}
-      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
 
     steps:
       - name: Checkout
@@ -62,8 +83,8 @@ jobs:
             $publish = "true"
           }
           elseif ("${{ github.event_name }}" -eq "schedule") {
-            $version = "0.0.0-weekly.$date.${{ github.run_number }}"
-            $tag = "weekly/$version"
+            $version = "0.0.0-triweekly.$date.${{ github.run_number }}"
+            $tag = "triweekly/$version"
             $prerelease = "true"
             $publish = "false"
           }
@@ -122,8 +143,3 @@ jobs:
         if: ${{ steps.version.outputs.publish == 'true' && steps.nuget_login.outputs.NUGET_API_KEY != '' }}
         shell: pwsh
         run: dotnet nuget push "artifacts/*.nupkg" --api-key "${{ steps.nuget_login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
-
-      - name: Publish to NuGet (API key fallback)
-        if: ${{ steps.version.outputs.publish == 'true' && steps.nuget_login.outputs.NUGET_API_KEY == '' && env.NUGET_API_KEY != '' }}
-        shell: pwsh
-        run: dotnet nuget push "artifacts/*.nupkg" --api-key "$env:NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
