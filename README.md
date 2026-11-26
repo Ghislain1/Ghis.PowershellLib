@@ -111,7 +111,7 @@ For CI/CD, store the API key as a secret (for example, `NUGET_API_KEY` in GitHub
 ## CI/CD
 
 - GitHub Actions CI: `.github/workflows/ci.yml` restores, builds, and tests on pushes and pull requests.
-- GitHub Actions Release: `.github/workflows/release.yml` packs and can publish NuGet packages on `v*` tags when `NUGET_API_KEY` is configured.
+- GitHub Actions Release: `.github/workflows/release.yml` packs on `v*` tags, publishes to NuGet when `NUGET_API_KEY` is configured, and also runs every Monday at 06:00 UTC to create a weekly prerelease GitHub release with packaged artifacts.
 
 ## License
 

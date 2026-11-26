@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - "v*"
+  schedule:
+    - cron: "0 6 * * 1"
   workflow_dispatch:
 
 permissions:
@@ -16,6 +18,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -31,8 +35,23 @@ jobs:
       - name: Test
         run: dotnet test Ghis.PowershellLib.sln -c Release --no-build --verbosity normal
 
+      - name: Resolve release version
+        id: version
+        shell: pwsh
+        run: |
+          if ("${{ github.ref_type }}" -eq "tag") {
+            $tag = "${{ github.ref_name }}"
+            $version = $tag.TrimStart('v')
+          }
+          else {
+            $version = "0.0.0-weekly.$(Get-Date -Format 'yyyyMMdd').${{ github.run_number }}"
+            $tag = "weekly/$version"
+          }
+          "version=$version" >> $env:GITHUB_OUTPUT
+          "tag=$tag" >> $env:GITHUB_OUTPUT
+
       - name: Pack
-        run: dotnet pack Ghis.Powershell.Lib/Ghis.Powershell.Lib.csproj -c Release --no-build -o artifacts
+        run: dotnet pack Ghis.Powershell.Lib/Ghis.Powershell.Lib.csproj -c Release --no-build -o artifacts /p:PackageVersion=${{ steps.version.outputs.version }}
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
@@ -40,8 +59,17 @@ jobs:
           name: nuget-package
           path: artifacts/*.nupkg
 
+      - name: Create GitHub release
+        if: ${{ github.ref_type != 'tag' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+        run: |
+          $tag = "${{ steps.version.outputs.tag }}"
+          gh release create $tag artifacts/*.nupkg --generate-notes --prerelease --title $tag
+
       - name: Publish to NuGet
-        if: ${{ secrets.NUGET_API_KEY != '' }}
+        if: ${{ github.ref_type == 'tag' && secrets.NUGET_API_KEY != '' }}
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: dotnet nuget push "artifacts/*.nupkg" --api-key "$env:NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
