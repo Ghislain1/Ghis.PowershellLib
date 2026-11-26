@@ -14,4 +14,4 @@
 - Prefer small, targeted changes; preserve public API behavior unless requested.
 - Keep nullable and implicit-usings enabled project defaults.
 - When changing dependencies, verify restore/build/test and address vulnerability warnings when possible.
-- Do not commit unless explicitly asked.
+- Commit and push only when explicitly asked by the user.
