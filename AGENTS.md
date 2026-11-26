@@ -1,8 +1,8 @@
 # AGENTS.md
 
 ## Project
-- Library: `Ghis.Powershell.Lib` (net10.0) wrapping PowerShell SDK usage.
-- Tests: `Ghis.Powershell.Lib.Tests` (xUnit, net10.0).
+- Library: `Ghis.PowershellLib` (net10.0) wrapping PowerShell SDK usage.
+- Tests: `Ghis.PowershellLib.Tests` (xUnit, net10.0).
 
 ## Build & Test
 - Restore: `dotnet restore Ghis.PowershellLib.sln`

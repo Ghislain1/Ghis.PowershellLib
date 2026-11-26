@@ -1,4 +1,4 @@
-﻿namespace Ghis.PowershellLib;
+namespace Ghis.PowershellLib;
 
 /// <summary>
 /// </summary>

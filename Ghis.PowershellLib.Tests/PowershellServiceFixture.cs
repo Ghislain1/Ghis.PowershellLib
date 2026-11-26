@@ -1,4 +1,4 @@
-namespace Ghis.Powershell.Lib.Tests;
+namespace Ghis.PowershellLib.Tests;
 
 using FluentAssertions;
 using Ghis.PowershellLib;

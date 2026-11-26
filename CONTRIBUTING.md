@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for contributing to `Ghis.Powershell.Lib`.
+Thank you for contributing to `Ghis.PowershellLib`.
 
 ## Development Setup
 
@@ -79,7 +79,7 @@ git push origin v1.0.4
 The `Release` GitHub Actions workflow will:
 
 - Build and test the solution.
-- Pack `Ghis.Powershell.Lib` using the tag version.
+- Pack `Ghis.PowershellLib` (`Ghis.PowershellLib/Ghis.PowershellLib.csproj`) using the tag version.
 - Create or update the GitHub release for that tag.
 - Publish the package to NuGet.org via Trusted Publishing (`NUGET_USER`).
 
@@ -108,7 +108,7 @@ For normal patch releases, creating the next `vX.Y.Z` tag is the clearest way to
 The library project generates a NuGet package on build. To pack explicitly:
 
 ```bash
-dotnet pack Ghis.Powershell.Lib/Ghis.Powershell.Lib.csproj -c Release -o artifacts
+dotnet pack Ghis.PowershellLib/Ghis.PowershellLib.csproj -c Release -o artifacts
 ```
 
 ## PowerShell Script Examples

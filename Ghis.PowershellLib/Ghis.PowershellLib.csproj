@@ -1,10 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Ghis.PowershellLib</PackageId>
     <Company>@GhislainOne</Company>
     <Authors>@Ghislain Z.</Authors>
     <Description>A Simple service to use Powershell API  to manage some files</Description>

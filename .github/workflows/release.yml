@@ -104,7 +104,7 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path artifacts | Out-Null
-          dotnet pack Ghis.Powershell.Lib/Ghis.Powershell.Lib.csproj -c Release --no-build -o artifacts /p:PackageVersion=${{ steps.version.outputs.version }} /p:Version=${{ steps.gitversion.outputs.semVer }}
+          dotnet pack Ghis.PowershellLib/Ghis.PowershellLib.csproj -c Release --no-build -o artifacts /p:PackageVersion=${{ steps.version.outputs.version }} /p:Version=${{ steps.gitversion.outputs.semVer }}
           Get-ChildItem artifacts -Filter *.nupkg | Select-Object -ExpandProperty FullName
 
       - name: Upload package artifact
@@ -136,6 +136,7 @@ jobs:
           else {
             gh release upload $tag artifacts/*.nupkg --clobber
           }
+          if ($LASTEXITCODE -ne 0) { throw "GitHub release creation/upload failed for $tag" }
 
       - name: NuGet login (OIDC)
         if: ${{ steps.version.outputs.publish == 'true' }}

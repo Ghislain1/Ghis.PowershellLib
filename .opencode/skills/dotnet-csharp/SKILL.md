@@ -6,8 +6,8 @@ description: Use ONLY when working on C#/.NET code, .csproj files, NuGet depende
 # .NET/C# Workflow
 
 ## Repo facts
-- Library: `Ghis.Powershell.Lib` targeting `net10.0`
-- Tests: `Ghis.Powershell.Lib.Tests` targeting `net10.0`, xUnit
+- Library: `Ghis.PowershellLib` targeting `net10.0`
+- Tests: `Ghis.PowershellLib.Tests` targeting `net10.0`, xUnit
 
 ## Workflow
 1. Inspect relevant `.cs` and `.csproj` files before editing.

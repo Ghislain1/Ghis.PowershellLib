@@ -1,4 +1,4 @@
-# Ghis.Powershell.Lib
+# Ghis.PowershellLib
 
 A lightweight C# wrapper around the PowerShell SDK for executing PowerShell commands from .NET applications.
 
@@ -20,13 +20,13 @@ A lightweight C# wrapper around the PowerShell SDK for executing PowerShell comm
 Install the NuGet package:
 
 ```bash
-dotnet add package Ghis.Powershell.Lib
+dotnet add package Ghis.PowershellLib
 ```
 
 Or via the Package Manager Console:
 
 ```powershell
-Install-Package Ghis.Powershell.Lib
+Install-Package Ghis.PowershellLib
 ```
 
 ## Usage
@@ -95,7 +95,7 @@ For more details, see [CONTRIBUTING.md](CONTRIBUTING.md).
 The library project is configured to generate a NuGet package on build (`GeneratePackageOnBuild=true`). To create a package explicitly:
 
 ```bash
-dotnet pack Ghis.Powershell.Lib/Ghis.Powershell.Lib.csproj -c Release -o artifacts
+dotnet pack Ghis.PowershellLib/Ghis.PowershellLib.csproj -c Release -o artifacts
 ```
 
 This creates a `.nupkg` file in the `artifacts` directory.
