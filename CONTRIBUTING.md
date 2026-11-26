@@ -92,6 +92,15 @@ GitVersion is configured to read commit messages for version increments:
 - `+semver:fix` or `+semver:patch` - patch bump
 - `+semver:none` or `+semver:skip` - no bump
 
+Examples:
+
+```text
+feat: add cancellation support +semver:minor
+fix: handle null script output +semver:patch
+refactor: rename internal helper +semver:none
+feat!: redesign service API +semver:major
+```
+
 For normal patch releases, creating the next `vX.Y.Z` tag is the clearest way to control the published package version.
 
 ## Packaging
