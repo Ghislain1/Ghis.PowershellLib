@@ -111,6 +111,20 @@ The library project generates a NuGet package on build. To pack explicitly:
 dotnet pack Ghis.Powershell.Lib/Ghis.Powershell.Lib.csproj -c Release -o artifacts
 ```
 
+## PowerShell Script Examples
+
+When testing or extending `IPowershellService`, use `scriptString` values that are safe and deterministic. For example:
+
+```csharp
+var version = await powershellService.RunCommand(CancellationToken.None, "$PSVersionTable.PSVersion.ToString()");
+```
+
+```csharp
+var files = await powershellService.RunCommand(
+    CancellationToken.None,
+    "Get-ChildItem -Path . -File | Select-Object -ExpandProperty Name");
+```
+
 ## Pull Requests
 
 - Describe the problem, the approach, and how you verified the change.
