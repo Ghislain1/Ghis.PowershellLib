@@ -27,8 +27,10 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
-      - name: Restore tools
-        run: dotnet tool restore
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v4.2.0
+        with:
+          versionSpec: '6.x'
 
       - name: Determine version
         id: gitversion
