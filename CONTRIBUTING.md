@@ -53,6 +53,47 @@ To verify formatting without changing files (useful in CI):
 dotnet format Ghis.PowershellLib.sln --verify-no-changes
 ```
 
+## Versioning and Releases (GitVersion)
+
+This repository uses [GitVersion](https://gitversion.net/) to calculate semantic versions from Git history. Configuration is in `GitVersion.yml`.
+
+### Check the calculated version locally
+
+```bash
+dotnet tool restore
+dotnet tool run dotnet-gitversion
+dotnet tool run dotnet-gitversion /showvariable SemVer
+```
+
+### Create a release with a Git tag
+
+Stable NuGet publishing is triggered by pushing a `v*` tag. Use a semantic version tag that matches the intended release:
+
+```bash
+git checkout master
+git pull
+git tag v1.0.4
+git push origin v1.0.4
+```
+
+The `Release` GitHub Actions workflow will:
+
+- Build and test the solution.
+- Pack `Ghis.Powershell.Lib` using the tag version.
+- Create or update the GitHub release for that tag.
+- Publish the package to NuGet.org via Trusted Publishing (`NUGET_USER`) or `NUGET_API_KEY` fallback.
+
+### Version bump hints
+
+GitVersion is configured to read commit messages for version increments:
+
+- `+semver:major` or `+semver:breaking` - major bump
+- `+semver:minor` or `+semver:feature` - minor bump
+- `+semver:fix` or `+semver:patch` - patch bump
+- `+semver:none` or `+semver:skip` - no bump
+
+For normal patch releases, creating the next `vX.Y.Z` tag is the clearest way to control the published package version.
+
 ## Packaging
 
 The library project generates a NuGet package on build. To pack explicitly:
