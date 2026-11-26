@@ -100,7 +100,11 @@ jobs:
           "publish=$publish" >> $env:GITHUB_OUTPUT
 
       - name: Pack
-        run: dotnet pack Ghis.Powershell.Lib/Ghis.Powershell.Lib.csproj -c Release --no-build -o artifacts /p:PackageVersion=${{ steps.version.outputs.version }} /p:Version=${{ steps.gitversion.outputs.semVer }}
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path artifacts | Out-Null
+          dotnet pack Ghis.Powershell.Lib/Ghis.Powershell.Lib.csproj -c Release --no-build -o artifacts /p:PackageVersion=${{ steps.version.outputs.version }} /p:Version=${{ steps.gitversion.outputs.semVer }}
+          Get-ChildItem artifacts -Filter *.nupkg | Select-Object -ExpandProperty FullName
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
@@ -142,4 +146,9 @@ jobs:
       - name: Publish to NuGet (Trusted Publishing)
         if: ${{ steps.version.outputs.publish == 'true' }}
         shell: pwsh
-        run: dotnet nuget push "artifacts/*.nupkg" --api-key "${{ steps.nuget_login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: |
+          $packages = Get-ChildItem artifacts -Filter *.nupkg
+          if (-not $packages) { throw "No .nupkg files found in artifacts." }
+          foreach ($package in $packages) {
+            dotnet nuget push $package.FullName --api-key "${{ steps.nuget_login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+          }
